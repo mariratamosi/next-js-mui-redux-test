@@ -1,28 +1,15 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import MuiTable from "../tables/muiTable";
+import React, { useState } from "react";
 import { Button } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
-import {
-  doctorInfoTableColumns,
-  doctorInfoRowKeys,
-} from "../tables/doctorInfoTableUtility";
+import DoctorInfoTable from "../tables/doctorInfoTable";
 import SpaceDashboardIcon from "@mui/icons-material/SpaceDashboard";
+import DoctorInfoCard from "../cards/doctorInfoCard";
 
 const DoctorsHomePageWrapper = ({ doctorsInfo }) => {
-  const [cardView, setCardView] = useState(true);
-  const rows = doctorsInfo.users.map((doctor) => {
-    return {
-      ...doctor,
-      key: doctor.id,
-    };
-  });
-
-  useEffect(() => {
-    console.log(rows);
-  }, []);
+  const [cardView, setCardView] = useState(false);
 
   const onActionClick = (rowId) => {
     console.log(rowId);
@@ -45,16 +32,12 @@ const DoctorsHomePageWrapper = ({ doctorsInfo }) => {
           {!cardView && <SpaceDashboardIcon />}
         </Button>
       </header>
-      {!cardView && (
-        <MuiTable
-          rows={rows}
-          columns={doctorInfoTableColumns}
-          rowKeys={doctorInfoRowKeys}
-          onActionClick={onActionClick}
-          actionText={"Get appointment"}
-        ></MuiTable>
-      )}
-      {cardView && }
+      <DoctorInfoTable
+        isTableView={!cardView}
+        onActionClick={onActionClick}
+        doctors={doctorsInfo.users}
+      />
+      <DoctorInfoCard cardView={cardView} />
     </div>
   );
 };
