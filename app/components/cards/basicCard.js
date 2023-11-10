@@ -13,8 +13,12 @@ export default function BasicCard({
   children,
 }) {
   return (
-    <Card sx={{ maxWidth: 345, width: 250 }}>
-      <CardMedia sx={{ height: 140 }} image={imgUrl} title={imgAltText} />
+    <Card sx={{ maxWidth: 345, width: 250, marginBottom: 5 }}>
+      <CardMedia
+        sx={{ height: 140, objectFit: "contain" }}
+        image={imgUrl}
+        title={imgAltText}
+      />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
           {header}
