@@ -1,15 +1,31 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import DoctorInfoTable from "../../tables/doctorInfoTable";
 import DoctorsHomePageHeader from "./doctorsHomePageHeader";
-import DoctorsInfoCard from "../../cards/DoctorsInfoCard";
+import DoctorsInfoCard from "../../cards/doctorsInfoCard";
+import DoctorsAppointmentModal from "./doctorsAppointmentModal";
 
 const DoctorsHomePageWrapper = ({ doctorsInfo }) => {
   const [cardView, setCardView] = useState(true);
+  const [appointmentModalOpen, setAppointmentModalOpen] = useState(false);
+  const [selectedDoctorId, setSelectedDoctorId] = useState(0);
 
-  const onActionClick = (rowId) => {
+  useEffect(() => {
+    console.table({
+      appointmentModalOpen,
+      selectedDoctorId,
+    });
+  }, [selectedDoctorId, appointmentModalOpen]);
+
+  const onGetAppointmentClick = (rowId) => {
     console.log(rowId);
+    setSelectedDoctorId(rowId);
+    setAppointmentModalOpen(true);
+  };
+
+  const onHideAppointmentClick = () => {
+    setAppointmentModalOpen(false);
   };
 
   return (
@@ -17,13 +33,19 @@ const DoctorsHomePageWrapper = ({ doctorsInfo }) => {
       <DoctorsHomePageHeader cardView={cardView} setCardView={setCardView} />
       <DoctorInfoTable
         isTableView={!cardView}
-        onActionClick={onActionClick}
+        onActionClick={onGetAppointmentClick}
         doctors={doctorsInfo.users}
       />
       <DoctorsInfoCard
         cardView={cardView}
         doctorsList={doctorsInfo.users}
-        onActionClick={onActionClick}
+        onActionClick={onGetAppointmentClick}
+      />
+
+      <DoctorsAppointmentModal
+        onHideAppointmentClick={onHideAppointmentClick}
+        doctorId={selectedDoctorId}
+        open={appointmentModalOpen}
       />
     </div>
   );
