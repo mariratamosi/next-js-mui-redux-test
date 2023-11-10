@@ -1,15 +1,18 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import MuiTable from "../tables/muiTable";
 import { Button } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
-import doctorInfoTableColumns from "../tables/doctorInfoTableColumns";
+import {
+  doctorInfoTableColumns,
+  doctorInfoRowKeys,
+} from "../tables/doctorInfoTableUtility";
+import SpaceDashboardIcon from "@mui/icons-material/SpaceDashboard";
 
 const DoctorsHomePageWrapper = ({ doctorsInfo }) => {
-  const rowKeys = ["first_name", "country", "gender"];
-
+  const [cardView, setCardView] = useState(true);
   const rows = doctorsInfo.users.map((doctor) => {
     return {
       ...doctor,
@@ -31,16 +34,27 @@ const DoctorsHomePageWrapper = ({ doctorsInfo }) => {
         <Typography variant="h3" component="h2">
           Our doctors
         </Typography>
-        <Button size="small" variant="outlined">
-          <FormatListBulletedIcon />
+        <Button
+          size="small"
+          variant="outlined"
+          onClick={() => {
+            setCardView((state) => !state);
+          }}
+        >
+          {cardView && <FormatListBulletedIcon />}
+          {!cardView && <SpaceDashboardIcon />}
         </Button>
       </header>
-      <MuiTable
-        rows={rows}
-        columns={doctorInfoTableColumns}
-        rowKeys={rowKeys}
-        onActionClick={onActionClick}
-      ></MuiTable>
+      {!cardView && (
+        <MuiTable
+          rows={rows}
+          columns={doctorInfoTableColumns}
+          rowKeys={doctorInfoRowKeys}
+          onActionClick={onActionClick}
+          actionText={"Get appointment"}
+        ></MuiTable>
+      )}
+      {cardView && }
     </div>
   );
 };

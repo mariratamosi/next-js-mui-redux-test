@@ -8,7 +8,13 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Button } from "@mui/material";
 
-export default function MuiTable({ columns, rows, rowKeys, onActionClick }) {
+export default function MuiTable({
+  columns,
+  rows,
+  rowKeys,
+  onActionClick,
+  actionText,
+}) {
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -45,7 +51,7 @@ export default function MuiTable({ columns, rows, rowKeys, onActionClick }) {
                       onActionClick(row.id);
                     }}
                   >
-                    Action
+                    {actionText}
                   </Button>
                 </TableCell>
               )}
