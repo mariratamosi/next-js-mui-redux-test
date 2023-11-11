@@ -169,7 +169,7 @@ function ResponsiveAppBar() {
                       variant="body2"
                       underline="none"
                     >
-                      <li>Profile</li>
+                      Profile
                     </Link>
                   </MenuItem>
                   <MenuItem
