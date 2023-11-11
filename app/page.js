@@ -19,6 +19,7 @@ async function getData() {
     // This will activate the closest `error.js` Error Boundary
     throw new Error("Failed to fetch data");
   }
+
   const doctorsInfo = await response.json();
 
   return doctorsInfo;

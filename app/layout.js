@@ -1,6 +1,7 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
-
+import { getServerSession } from "next-auth";
+import SessionProvider from "./auth/SessionProvider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
@@ -8,12 +9,16 @@ export const metadata = {
   description: "Manage your doctors here",
 };
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
+  const session = await getServerSession();
+
   return (
     <html lang="en">
       <meta name="viewport" content="initial-scale=1, width=device-width" />
 
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <SessionProvider session={session}>{children}</SessionProvider>
+      </body>
     </html>
   );
 }
