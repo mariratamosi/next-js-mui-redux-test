@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import DoctorInfoTable from "../../tables/doctorInfoTable";
 import DoctorsHomePageHeader from "./doctorsHomePageHeader";
 import DoctorsInfoCard from "../../cards/doctorsInfoCard";
-import DoctorsAppointmentModal from "./doctorsAppointmentModal";
+import DoctorsAppointmentModal from "../../modals/doctorsAppointmentModal";
 
 const DoctorsHomePageWrapper = ({ doctorsInfo }) => {
   const [cardView, setCardView] = useState(true);
@@ -24,8 +24,11 @@ const DoctorsHomePageWrapper = ({ doctorsInfo }) => {
     setAppointmentModalOpen(true);
   };
 
-  const onHideAppointmentClick = () => {
+  const onHideAppointmentClick = (appointmentInfo) => {
     setAppointmentModalOpen(false);
+    if (!appointmentInfo) return;
+    const { doctor, selectedDate, selectedTime } = appointmentInfo;
+    console.log(appointmentInfo);
   };
 
   return (

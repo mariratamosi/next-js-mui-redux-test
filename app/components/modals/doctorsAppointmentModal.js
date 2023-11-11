@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
-import FullScreenModal from "../../modals/fullScreenModal";
-import BasicCalendar from "../../calender/basicCalendar";
+import FullScreenModal from "./fullScreenModal";
+import BasicCalendar from "../calender/basicCalendar";
 import { Typography } from "@mui/material";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
-import TimeButtons from "../../calender/timePicker";
+import TimeButtons from "../calender/timePicker";
 
 const DoctorsAppointmentModal = ({
   onHideAppointmentClick,
   doctorId,
   open,
 }) => {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState(null);
   const [doctor, setDoctor] = useState(null);
@@ -29,6 +29,7 @@ const DoctorsAppointmentModal = ({
 
       console.log(doctorInfo);
       setDoctor(doctorInfo.user);
+      setIsLoading(false);
     };
 
     getDoctorInfoById(doctorId);
@@ -47,6 +48,7 @@ const DoctorsAppointmentModal = ({
       onHideAppointmentClick,
       doctorId,
       open,
+      isLoading,
     });
   }, [open]);
 
@@ -62,10 +64,10 @@ const DoctorsAppointmentModal = ({
   };
 
   const onModalHide = () => {
+    onHideAppointmentClick();
     setSelectedDate(null);
     setDoctor(null);
     setSelectedTime(null);
-    onHideAppointmentClick();
   };
 
   return (
