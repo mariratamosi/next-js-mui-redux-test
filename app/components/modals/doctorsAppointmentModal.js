@@ -4,8 +4,9 @@ import BasicCalendar from "../calender/basicCalendar";
 import { Typography } from "@mui/material";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import TimeButtons from "../calender/timePicker";
-import { redirect } from "next/navigation";
 import { useRouter } from "next/navigation";
+import { useUserInfo } from "@/app/customHook/useUserInfo";
+import { signIn } from "next-auth/react";
 
 const DoctorsAppointmentModal = ({
   onHideAppointmentClick,
@@ -17,7 +18,7 @@ const DoctorsAppointmentModal = ({
   const [selectedTime, setSelectedTime] = useState(null);
   const [doctor, setDoctor] = useState(null);
   const router = useRouter();
-
+  const userInfo = useUserInfo();
 
   useEffect(() => {
     if (doctorId === 0) return;
@@ -77,10 +78,15 @@ const DoctorsAppointmentModal = ({
   const onAppointmentConfirm = () => {
     console.log("Confirm appointment ", doctorId, selectedDate, selectedTime);
     setIsLoading(true);
-    setTimeout(() => {
-      console.log("Hi");
-      router.push("/login");
-    }, 3000);
+
+    if (!userInfo) {
+      let text = "Plese login";
+      if (confirm(text) == true) {
+        signIn();
+      } else {
+        //what to do
+      }
+    }
   };
 
   return (
