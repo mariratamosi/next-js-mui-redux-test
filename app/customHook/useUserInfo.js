@@ -4,7 +4,7 @@ import { useSession } from "next-auth/react";
 export function useUserInfo() {
   const { data: session } = useSession();
 
-  const [userInfo, setUserInfo] = useState(null);
+  const [userInfo, setUserInfo] = useState(session?.user);
 
   useEffect(() => {
     setUserInfo(session?.user);

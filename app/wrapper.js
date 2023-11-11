@@ -6,14 +6,17 @@ import DoctorsHomePage from "./components/main/doctorsHomePage/doctorsHomePageWr
 import { ThemeProvider } from "@emotion/react";
 import AppTheme from "./Utility/theme";
 import CssBaseline from "@mui/material/CssBaseline";
-import AppWrapper from "./wrapper";
 
-const HomeWrapper = ({ doctorsInfo }) => {
+const AppWrapper = ({ children }) => {
   return (
-    <AppWrapper>
-      <DoctorsHomePage doctorsInfo={doctorsInfo} />
-    </AppWrapper>
+    <ThemeProvider theme={AppTheme}>
+      <CssBaseline />
+      <header className="">
+        <AppNavBar />
+      </header>
+      {children}
+    </ThemeProvider>
   );
 };
 
-export default HomeWrapper;
+export default AppWrapper;

@@ -16,9 +16,9 @@ import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import { signIn, signOut } from "next-auth/react";
 import { useUserInfo } from "@/app/customHook/useUserInfo";
+import Link from "next/link";
 
 const pages = ["Products", "Pricing", "Blog"];
-const settings = ["Profile", "Account", "Dashboard"];
 
 function ResponsiveAppBar() {
   const userInfo = useUserInfo();
@@ -158,11 +158,20 @@ function ResponsiveAppBar() {
                   open={Boolean(anchorElUser)}
                   onClose={handleCloseUserMenu}
                 >
-                  {settings.map((setting) => (
-                    <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                      <Typography textAlign="center">{setting}</Typography>
-                    </MenuItem>
-                  ))}
+                  <MenuItem
+                    onClick={() => {
+                      handleCloseUserMenu();
+                    }}
+                  >
+                    <Link
+                      href="/profile"
+                      component="button"
+                      variant="body2"
+                      underline="none"
+                    >
+                      <li>Profile</li>
+                    </Link>
+                  </MenuItem>
                   <MenuItem
                     color="inherit"
                     onClick={() => {
