@@ -7,6 +7,8 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import CloseIcon from "@mui/icons-material/Close";
 import Slide from "@mui/material/Slide";
+import Loading from "@/app/Utility/loading";
+import PageLoading from "@/app/Utility/pageLoading";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -17,6 +19,8 @@ export default function FullScreenModal({
   onHide,
   isSaveDisabled,
   children,
+  onSave,
+  isLoading,
 }) {
   const [open, setOpen] = React.useState(isOpen);
 
@@ -28,6 +32,10 @@ export default function FullScreenModal({
   const handleClose = () => {
     setOpen(false);
     onHide();
+  };
+
+  const handleSave = () => {
+    onSave();
   };
 
   return (
@@ -54,15 +62,16 @@ export default function FullScreenModal({
             <Button
               autoFocus
               color="inherit"
-              onClick={handleClose}
+              onClick={handleSave}
               disabled={isSaveDisabled}
             >
-              save
+              Confirm
             </Button>
           </Toolbar>
         </AppBar>
 
         {children}
+        {isLoading && <PageLoading />}
       </Dialog>
     </React.Fragment>
   );

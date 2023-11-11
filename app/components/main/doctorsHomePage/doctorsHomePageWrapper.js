@@ -24,11 +24,8 @@ const DoctorsHomePageWrapper = ({ doctorsInfo }) => {
     setAppointmentModalOpen(true);
   };
 
-  const onHideAppointmentClick = (appointmentInfo) => {
+  const onHideAppointmentClick = () => {
     setAppointmentModalOpen(false);
-    if (!appointmentInfo) return;
-    const { doctor, selectedDate, selectedTime } = appointmentInfo;
-    console.log(appointmentInfo);
   };
 
   return (

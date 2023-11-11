@@ -70,6 +70,11 @@ const DoctorsAppointmentModal = ({
     setSelectedTime(null);
   };
 
+  const onAppointmentConfirm = () => {
+    console.log("Confirm appointment ", doctorId, selectedDate, selectedTime);
+    setIsLoading(true);
+  };
+
   return (
     open && (
       <FullScreenModal
@@ -79,6 +84,7 @@ const DoctorsAppointmentModal = ({
         isSaveDisabled={
           doctor === null || selectedDate === null || selectedTime === null
         }
+        onSave={onAppointmentConfirm}
       >
         <div className="flex flex-wrap justify-around h-full">
           <div className="flex-1 md:w-80   border-gray-300 md:border-r md:h-full p-8 pt-10">
