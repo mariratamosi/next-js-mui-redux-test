@@ -1,101 +1,105 @@
-import React, { useEffect, useState } from "react";
-import FullScreenModal from "./fullScreenModal";
-import BasicCalendar from "../calender/basicCalendar";
-import { Typography } from "@mui/material";
-import AccessTimeIcon from "@mui/icons-material/AccessTime";
-import TimeButtons from "../calender/timePicker";
-import { useRouter } from "next/navigation";
-import { useUserInfo } from "@/app/customHook/useUserInfo";
-import { signIn } from "next-auth/react";
+import React, { useEffect, useState } from "react"
+import FullScreenModal from "./fullScreenModal"
+import BasicCalendar from "../calender/basicCalendar"
+import { Typography } from "@mui/material"
+import AccessTimeIcon from "@mui/icons-material/AccessTime"
+import TimeButtons from "../calender/timePicker"
+import { useRouter } from "next/navigation"
+import { useUserInfo } from "@/app/customHook/useUserInfo"
+import { signIn } from "next-auth/react"
+import { useDispatch, useSelector } from "react-redux"
+import {
+  getPendingAppointment,
+  updatePendingAppointment,
+  completePendingAppointment,
+} from "@/app/GlobalRedux/slices/appointment/pendingAppointmentReducer"
 
 const DoctorsAppointmentModal = ({
   onHideAppointmentClick,
   doctorId,
   open,
 }) => {
-  const [isLoading, setIsLoading] = useState(true);
-  const [appointmentInfo, setAppointmentInfo] = useState({
-    selectedDate: null,
-    selectedTime: null,
-    doctor: null,
-  });
+  const [isLoading, setIsLoading] = useState(true)
+  const appointmentInfo = useSelector((state) => state.appointment.info)
+  const dispatch = useDispatch()
 
-  const userInfo = useUserInfo();
+  const userInfo = useUserInfo()
 
   useEffect(() => {
-    if (doctorId === 0) return;
+    if (doctorId === 0) return
 
-    console.log(doctorId);
+    console.log(doctorId)
 
     const getDoctorInfoById = async (id) => {
-      console.log("getDoctorInfoById", doctorId);
+      console.log("getDoctorInfoById", doctorId)
 
       const response = await fetch(
-        `https://api.slingacademy.com/v1/sample-data/users/${id}`
-      );
+        `https://api.slingacademy.com/v1/sample-data/users/${id}`,
+      )
 
       if (!response.ok) {
-        throw new Error("Failed to fetch data");
+        throw new Error("Failed to fetch data")
       }
-      const doctorInfo = await response.json();
+      const doctorInfo = await response.json()
 
-      setAppointmentInfo((info) => {
-        return {
-          ...info,
+      dispatch(
+        updatePendingAppointment({
+          ...appointmentInfo,
           doctor: doctorInfo.user,
-        };
-      });
-      setIsLoading(false);
-    };
+        }),
+      )
+      setIsLoading(false)
+    }
 
-    getDoctorInfoById(doctorId);
+    getDoctorInfoById(doctorId)
 
-    return;
-  }, [doctorId]);
+    return
+  }, [doctorId])
 
   const onDateSelected = (selectedDate) => {
-    setAppointmentInfo((info) => {
-      return {
-        ...info,
+    dispatch(
+      updatePendingAppointment({
+        ...appointmentInfo,
         selectedDate: selectedDate,
-      };
-    });
-  };
+      }),
+    )
+  }
 
   const onTimeSelected = (selectedTime) => {
-    setAppointmentInfo((info) => {
-      return {
-        ...info,
+    dispatch(
+      updatePendingAppointment({
+        ...appointmentInfo,
         selectedTime: selectedTime,
-      };
-    });
-  };
+      }),
+    )
+  }
 
   const onModalHide = () => {
-    console.log(onModalHide);
-    onHideAppointmentClick();
-    setAppointmentInfo({
-      selectedDate: null,
-      selectedTime: null,
-      doctor: null,
-    });
-    setIsLoading(false);
-  };
+    console.log(onModalHide)
+    onHideAppointmentClick()
+    dispatch(completePendingAppointment())
+    setIsLoading(false)
+  }
 
   const onAppointmentConfirm = () => {
-    setIsLoading(true);
+    setIsLoading(true)
 
     if (!userInfo) {
-      let text = "Plese login";
+      let text = "Plese login"
       if (confirm(text) == true) {
-        signIn();
+        // console.log(
+        //   appointmentInfo.doctor,
+        //   appointmentInfo.selectedDate,
+        //   appointmentInfo.selectedTime,
+        // )
+        signIn()
       } else {
-        onModalHide();
+        onModalHide()
       }
     }
-    alert("appointment confirm");
-    onModalHide();
-  };
+    alert("appointment confirm")
+    onModalHide()
+  }
 
   return (
     open && (
@@ -152,7 +156,7 @@ const DoctorsAppointmentModal = ({
         </div>
       </FullScreenModal>
     )
-  );
-};
+  )
+}
 
-export default DoctorsAppointmentModal;
+export default DoctorsAppointmentModal
