@@ -12,11 +12,16 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function FullScreenModal({ isOpen, onHide, children }) {
+export default function FullScreenModal({
+  isOpen,
+  onHide,
+  isSaveDisabled,
+  children,
+}) {
   const [open, setOpen] = React.useState(isOpen);
 
   React.useEffect(() => {
-    console.log(open, isOpen);
+    console.log(open, isOpen, isSaveDisabled);
     setOpen(isOpen);
   }, [isOpen]);
 
@@ -44,9 +49,14 @@ export default function FullScreenModal({ isOpen, onHide, children }) {
               <CloseIcon />
             </IconButton>
             <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
-              Sound
+              Appoinment
             </Typography>
-            <Button autoFocus color="inherit" onClick={handleClose}>
+            <Button
+              autoFocus
+              color="inherit"
+              onClick={handleClose}
+              disabled={isSaveDisabled}
+            >
               save
             </Button>
           </Toolbar>

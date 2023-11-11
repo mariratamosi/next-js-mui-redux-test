@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import FullScreenModal from "../../modals/fullScreenModal";
 import BasicCalendar from "../../calender/basicCalendar";
+import { Typography } from "@mui/material";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import TimeButtons from "../../calender/timePicker";
 
 const DoctorsAppointmentModal = ({
   onHideAppointmentClick,
@@ -8,6 +11,30 @@ const DoctorsAppointmentModal = ({
   open,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedTime, setSelectedTime] = useState(null);
+  const [doctor, setDoctor] = useState(null);
+
+  useEffect(() => {
+    if (doctorId === 0) return;
+    const getDoctorInfoById = async (id) => {
+      const response = await fetch(
+        `https://api.slingacademy.com/v1/sample-data/users/${id}`
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch data");
+      }
+      const doctorInfo = await response.json();
+
+      console.log(doctorInfo);
+      setDoctor(doctorInfo.user);
+    };
+
+    getDoctorInfoById(doctorId);
+
+    return;
+  }, [doctorId]);
 
   //get doctors available date
   //disable past date
@@ -23,22 +50,69 @@ const DoctorsAppointmentModal = ({
     });
   }, [open]);
 
+  const onDateSelected = (selectedDate) => {
+    console.log(selectedDate);
+    setSelectedDate(selectedDate);
+  };
+
+  const onTimeSelected = (selectedTime) => {
+    console.log(selectedTime);
+    setSelectedTime(selectedTime);
+    //setSelectedDate(selectedTime);
+  };
+
+  const onModalHide = () => {
+    setSelectedDate(null);
+    setDoctor(null);
+    setSelectedTime(null);
+    onHideAppointmentClick();
+  };
+
   return (
     open && (
       <FullScreenModal
         isOpen={true}
-        onHide={onHideAppointmentClick}
+        onHide={onModalHide}
         isLoading={isLoading}
+        isSaveDisabled={
+          doctor === null || selectedDate === null || selectedTime === null
+        }
       >
         <div className="flex flex-wrap justify-around h-full">
-          <div className="flex-1 md:w-80   border-gray-300 md:border-r md:h-full pt-5">
-            Docors info
+          <div className="flex-1 md:w-80   border-gray-300 md:border-r md:h-full p-8 pt-10">
+            {doctor && (
+              <div>
+                <div className="flex justify-start items-center">
+                  <AccessTimeIcon sx={{}} />
+                  <Typography
+                    variant="subtitle2"
+                    sx={{ marginLeft: 0.5, marginBottom: 0 }}
+                    gutterBottom
+                  >
+                    Get appointment
+                  </Typography>
+                </div>
+                <Typography
+                  variant="h3"
+                  component="div"
+                  sx={{ marginTop: 1.5 }}
+                >
+                  {doctor.first_name} {doctor.last_name}
+                </Typography>
+                <Typography variant="h5" component="div">
+                  {doctor.job}
+                </Typography>
+              </div>
+            )}
           </div>
           <div className="flex-1 md:w-80  border-gray-300 md:border-r h-full pt-5">
-            <BasicCalendar />
+            <BasicCalendar
+              onDateSelected={onDateSelected}
+              numberOfAvailableDates={2}
+            />
           </div>
-          <div className="flex-1 md:w-80  border-gray-300 h-full pt-5">
-            Time
+          <div className="flex-1 md:w-80  border-gray-300 md:h-full pt-5">
+            {selectedDate && <TimeButtons onTimeClick={onTimeSelected} />}
           </div>
         </div>
       </FullScreenModal>
