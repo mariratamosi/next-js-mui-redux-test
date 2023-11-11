@@ -14,15 +14,22 @@ const DoctorsAppointmentModal = ({
   open,
 }) => {
   const [isLoading, setIsLoading] = useState(true);
-  const [selectedDate, setSelectedDate] = useState(null);
-  const [selectedTime, setSelectedTime] = useState(null);
-  const [doctor, setDoctor] = useState(null);
-  const router = useRouter();
+  const [appointmentInfo, setAppointmentInfo] = useState({
+    selectedDate: null,
+    selectedTime: null,
+    doctor: null,
+  });
+
   const userInfo = useUserInfo();
 
   useEffect(() => {
     if (doctorId === 0) return;
+
+    console.log(doctorId);
+
     const getDoctorInfoById = async (id) => {
+      console.log("getDoctorInfoById", doctorId);
+
       const response = await fetch(
         `https://api.slingacademy.com/v1/sample-data/users/${id}`
       );
@@ -32,8 +39,12 @@ const DoctorsAppointmentModal = ({
       }
       const doctorInfo = await response.json();
 
-      console.log(doctorInfo);
-      setDoctor(doctorInfo.user);
+      setAppointmentInfo((info) => {
+        return {
+          ...info,
+          doctor: doctorInfo.user,
+        };
+      });
       setIsLoading(false);
     };
 
@@ -42,41 +53,36 @@ const DoctorsAppointmentModal = ({
     return;
   }, [doctorId]);
 
-  //get doctors available date
-  //disable past date
-  //after clicking on date populate time
-  //submit the time
-  //during submission - check auth
-
-  useEffect(() => {
-    console.table({
-      onHideAppointmentClick,
-      doctorId,
-      open,
-      isLoading,
-    });
-  }, [open]);
-
   const onDateSelected = (selectedDate) => {
-    console.log(selectedDate);
-    setSelectedDate(selectedDate);
+    setAppointmentInfo((info) => {
+      return {
+        ...info,
+        selectedDate: selectedDate,
+      };
+    });
   };
 
   const onTimeSelected = (selectedTime) => {
-    console.log(selectedTime);
-    setSelectedTime(selectedTime);
-    //setSelectedDate(selectedTime);
+    setAppointmentInfo((info) => {
+      return {
+        ...info,
+        selectedTime: selectedTime,
+      };
+    });
   };
 
   const onModalHide = () => {
+    console.log(onModalHide);
     onHideAppointmentClick();
-    setSelectedDate(null);
-    setDoctor(null);
-    setSelectedTime(null);
+    setAppointmentInfo({
+      selectedDate: null,
+      selectedTime: null,
+      doctor: null,
+    });
+    setIsLoading(false);
   };
 
   const onAppointmentConfirm = () => {
-    console.log("Confirm appointment ", doctorId, selectedDate, selectedTime);
     setIsLoading(true);
 
     if (!userInfo) {
@@ -84,9 +90,11 @@ const DoctorsAppointmentModal = ({
       if (confirm(text) == true) {
         signIn();
       } else {
-        //what to do
+        onModalHide();
       }
     }
+    alert("appointment confirm");
+    onModalHide();
   };
 
   return (
@@ -96,13 +104,15 @@ const DoctorsAppointmentModal = ({
         onHide={onModalHide}
         isLoading={isLoading}
         isSaveDisabled={
-          doctor === null || selectedDate === null || selectedTime === null
+          appointmentInfo.doctor === null ||
+          appointmentInfo.selectedDate === null ||
+          appointmentInfo.selectedTime === null
         }
         onSave={onAppointmentConfirm}
       >
         <div className="flex flex-wrap justify-around h-full">
           <div className="flex-1 md:w-80   border-gray-300 md:border-r md:h-full p-8 pt-10">
-            {doctor && (
+            {appointmentInfo.doctor && (
               <div>
                 <div className="flex justify-start items-center">
                   <AccessTimeIcon sx={{}} />
@@ -119,10 +129,11 @@ const DoctorsAppointmentModal = ({
                   component="div"
                   sx={{ marginTop: 1.5 }}
                 >
-                  {doctor.first_name} {doctor.last_name}
+                  {appointmentInfo.doctor.first_name}{" "}
+                  {appointmentInfo.doctor.last_name}
                 </Typography>
                 <Typography variant="h5" component="div">
-                  {doctor.job}
+                  {appointmentInfo.doctor.job}
                 </Typography>
               </div>
             )}
@@ -134,7 +145,9 @@ const DoctorsAppointmentModal = ({
             />
           </div>
           <div className="flex-1 md:w-80  border-gray-300 md:h-full pt-5">
-            {selectedDate && <TimeButtons onTimeClick={onTimeSelected} />}
+            {appointmentInfo.selectedDate && (
+              <TimeButtons onTimeClick={onTimeSelected} />
+            )}
           </div>
         </div>
       </FullScreenModal>
