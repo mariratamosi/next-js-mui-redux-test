@@ -1,30 +1,26 @@
 "use client"
 
 import React, { useEffect } from "react"
-import { useRouter } from "next/navigation"
 import { Button } from "@mui/material"
-import { useProducList } from "./useProducList"
+import { useRouter } from "next/navigation"
+import { useProducList } from "../useProducList"
 
 const page = () => {
-  const router = useRouter()
   const [products, refresh] = useProducList()
+  const router = useRouter()
 
   useEffect(() => {
-    console.log(" products 2", products)
+    console.log("useEffect products async", products)
   }, [])
-
-  useEffect(() => {
-    console.log(" products", products)
-  }, [products])
 
   return (
     <div>
       <Button
         onClick={() => {
-          router.push("/scores/async")
+          router.push("/scores")
         }}
       >
-        Go to async
+        Go to normal
       </Button>
       <Button
         onClick={() => {
