@@ -1,17 +1,17 @@
-import React from "react";
+import React from "react"
 import {
   doctorInfoTableColumns,
   doctorInfoRowKeys,
-} from "../tables/doctorInfoTableUtility";
-import MuiTable from "../tables/muiTable";
+} from "./doctorInfoTableUtility"
+import MuiTable from "./muiTable"
 
 const DoctorInfoTable = ({ isTableView, onActionClick, doctors }) => {
   const rows = doctors.map((doctor) => {
     return {
       ...doctor,
       key: doctor.id,
-    };
-  });
+    }
+  })
   return (
     isTableView && (
       <MuiTable
@@ -22,7 +22,7 @@ const DoctorInfoTable = ({ isTableView, onActionClick, doctors }) => {
         actionText={"Get appointment"}
       ></MuiTable>
     )
-  );
-};
+  )
+}
 
-export default DoctorInfoTable;
+export default DoctorInfoTable

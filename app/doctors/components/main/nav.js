@@ -1,49 +1,49 @@
-"use client";
+"use client"
 
-import { useEffect, useState } from "react";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import Menu from "@mui/material/Menu";
-import MenuIcon from "@mui/icons-material/Menu";
-import Container from "@mui/material/Container";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
-import MenuItem from "@mui/material/MenuItem";
-import AdbIcon from "@mui/icons-material/Adb";
-import { signIn, signOut } from "next-auth/react";
-import { useUserInfo } from "@/app/customHook/useUserInfo";
-import Link from "next/link";
+import { useEffect, useState } from "react"
+import AppBar from "@mui/material/AppBar"
+import Box from "@mui/material/Box"
+import Toolbar from "@mui/material/Toolbar"
+import IconButton from "@mui/material/IconButton"
+import Typography from "@mui/material/Typography"
+import Menu from "@mui/material/Menu"
+import MenuIcon from "@mui/icons-material/Menu"
+import Container from "@mui/material/Container"
+import Avatar from "@mui/material/Avatar"
+import Button from "@mui/material/Button"
+import Tooltip from "@mui/material/Tooltip"
+import MenuItem from "@mui/material/MenuItem"
+import AdbIcon from "@mui/icons-material/Adb"
+import { signIn, signOut } from "next-auth/react"
+import { useUserInfo } from "@/app/doctors/customHook/useUserInfo"
+import Link from "next/link"
 
-const pages = ["Products", "Pricing", "Blog"];
+const pages = ["Products", "Pricing", "Blog"]
 
 function ResponsiveAppBar() {
-  const userInfo = useUserInfo();
+  const userInfo = useUserInfo()
 
   useEffect(() => {
-    console.log(userInfo);
-  }, [userInfo]);
+    console.log(userInfo)
+  }, [userInfo])
 
-  const [anchorElNav, setAnchorElNav] = useState(null);
-  const [anchorElUser, setAnchorElUser] = useState(null);
+  const [anchorElNav, setAnchorElNav] = useState(null)
+  const [anchorElUser, setAnchorElUser] = useState(null)
 
   const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
-  };
+    setAnchorElNav(event.currentTarget)
+  }
   const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
-  };
+    setAnchorElUser(event.currentTarget)
+  }
 
   const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
-  };
+    setAnchorElNav(null)
+  }
 
   const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
+    setAnchorElUser(null)
+  }
 
   return (
     <AppBar position="static">
@@ -160,7 +160,7 @@ function ResponsiveAppBar() {
                 >
                   <MenuItem
                     onClick={() => {
-                      handleCloseUserMenu();
+                      handleCloseUserMenu()
                     }}
                   >
                     <Link
@@ -175,8 +175,8 @@ function ResponsiveAppBar() {
                   <MenuItem
                     color="inherit"
                     onClick={() => {
-                      signOut();
-                      handleCloseUserMenu();
+                      signOut()
+                      handleCloseUserMenu()
                     }}
                   >
                     sign Out
@@ -193,6 +193,6 @@ function ResponsiveAppBar() {
         </Toolbar>
       </Container>
     </AppBar>
-  );
+  )
 }
-export default ResponsiveAppBar;
+export default ResponsiveAppBar

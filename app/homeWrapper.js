@@ -1,17 +1,11 @@
 "use client"
 
 import React from "react"
-import AppNavBar from "./components/main/nav"
-import DoctorsHomePage from "./components/main/doctorsHomePage/doctorsHomePageWrapper"
-import { ThemeProvider } from "@emotion/react"
-import AppTheme from "./Utility/theme"
-import CssBaseline from "@mui/material/CssBaseline"
-import AppWrapper from "./wrapper"
+import DoctorsHomePage from "./doctors/components/main/doctorsHomePage/doctorsHomePageWrapper"
+import AppWrapper from "./appWrapper"
 
 const HomeWrapper = ({ doctorsInfo }) => {
-  //appointment_pending = {
-
-  //}
+  //page-homewrapper-AppWrapper-themeWrapper
   return (
     <AppWrapper>
       <DoctorsHomePage doctorsInfo={doctorsInfo} />
