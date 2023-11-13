@@ -6,7 +6,7 @@ import { updateProducts } from "../GlobalRedux/slices/products"
 export function useProducList() {
   const dispatch = useDispatch()
   const products = useSelector((state) => state.products)
-  const [refreshNeeded, setRefreshNeeded] = useState(true)
+  const [refreshNeeded, setRefreshNeeded] = useState(false)
 
   useEffect(() => {
     const getProducsList = () => {
