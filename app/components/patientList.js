@@ -6,9 +6,11 @@ import PageLoading from "../Utility/pageLoading"
 import { useRouter } from "next/navigation"
 import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
+import { TextField } from "@mui/material"
 
 const PatientList = () => {
   const [patientList, setPatientList] = useState(null)
+  const [search, setSearch] = useState("")
   const router = useRouter()
 
   useEffect(() => {
@@ -48,8 +50,31 @@ const PatientList = () => {
         <Typography variant="h4" gutterBottom>
           Your patients
         </Typography>
+
+        <TextField
+          label="Search"
+          variant="outlined"
+          value={search}
+          onChange={(e) => {
+            setSearch(e.target.value)
+          }}
+          inputProps={{ autoComplete: false }}
+        />
       </Box>
-      <BasicTable patientList={patientList} onDetailsClick={onDetailsClick} />
+      <BasicTable
+        patientList={patientList.filter((patient) => {
+          return (
+            patient.profile.firstName
+              .toLowerCase()
+              .includes(search.toLowerCase()) ||
+            patient.profile.lastName
+              .toLowerCase()
+              .includes(search.toLowerCase()) ||
+            patient.profile.phone.toLowerCase().includes(search.toLowerCase())
+          )
+        })}
+        onDetailsClick={onDetailsClick}
+      />
     </div>
   )
 }

@@ -1,4 +1,4 @@
-import Loading from "./loading";
+import Loading from "./loading"
 
 // width: 100%;
 // background: #a09d9d;
@@ -15,7 +15,7 @@ export default function PageLoading() {
         style={{
           width: "100%",
           height: "100%",
-          background: "#a09d9d",
+          background: "#fff",
           position: "absolute",
           zIndex: 1200,
           top: 0,
@@ -24,5 +24,5 @@ export default function PageLoading() {
       ></div>
       <Loading />
     </>
-  );
+  )
 }
