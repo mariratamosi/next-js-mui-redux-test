@@ -1,4 +1,4 @@
-import { createTheme } from "@mui/material";
+import { createTheme } from "@mui/material"
 
 const themeOptions = {
   palette: {
@@ -20,8 +20,8 @@ const themeOptions = {
       primary: "rgba(65,65,65,0.87)",
     },
   },
-};
+}
 
-const AppTheme = createTheme(themeOptions);
+const AppTheme = createTheme(themeOptions)
 
-export default AppTheme;
+export default AppTheme

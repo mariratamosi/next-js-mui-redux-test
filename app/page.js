@@ -1,11 +1,11 @@
-import HomeWrapper from "./homeWrapper"
+import AppWrapper from "./appWrapper"
 
 export default async function Home() {
-  const doctorsInfo = await getData()
+  //const doctorsInfo = await getData()
 
   return (
     <main className="flex min-h-screen flex-col font-medium">
-      <HomeWrapper doctorsInfo={doctorsInfo} />
+      <AppWrapper>Hello world</AppWrapper>
     </main>
   )
 }
