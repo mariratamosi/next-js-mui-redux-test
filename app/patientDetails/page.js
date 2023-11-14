@@ -12,6 +12,8 @@ import Divider from "@mui/material/Divider"
 import { useRouter } from "next/navigation"
 import Image from "next/image"
 
+// check
+
 const Page = () => {
   const urlParams = useSearchParams()
   const id = urlParams.get("id")
