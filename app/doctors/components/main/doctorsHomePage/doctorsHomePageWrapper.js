@@ -15,7 +15,6 @@ const DoctorsHomePageWrapper = ({ doctorsInfo }) => {
     console.table({
       appointmentModalOpen,
       selectedDoctorId,
-      x,
     })
   }, [selectedDoctorId, appointmentModalOpen])
 

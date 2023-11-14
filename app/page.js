@@ -3,11 +3,7 @@ import HomeWrapper from "./homeWrapper"
 export default async function Home() {
   const doctorsInfo = await getData()
 
-  return (
-    <main className="flex min-h-screen flex-col font-medium">
-      <HomeWrapper doctorsInfo={doctorsInfo} />
-    </main>
-  )
+  return <HomeWrapper doctorsInfo={doctorsInfo} />
 }
 
 async function getData() {
