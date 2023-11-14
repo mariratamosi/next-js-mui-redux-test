@@ -10,8 +10,9 @@ import { Button } from "@mui/material"
 import AppWrapper from "../appWrapper"
 import Divider from "@mui/material/Divider"
 import { useRouter } from "next/navigation"
+import Image from "next/image"
 
-const page = () => {
+const Page = () => {
   const urlParams = useSearchParams()
   const id = urlParams.get("id")
   const name = urlParams.get("name")
@@ -31,7 +32,7 @@ const page = () => {
     }
 
     fetchPatientInfo()
-  }, [])
+  }, [id])
 
   if (patientInfo === null) return <PageLoading />
 
@@ -62,7 +63,13 @@ const page = () => {
         <Card sx={{ width: "100%", padding: 4 }}>
           <div className="">
             <div className="flex items-center">
-              <img src={img} alt={name} className="rounded-full	w-24" />
+              <Image
+                src={img}
+                alt={name}
+                width={96}
+                height={96}
+                className=" rounded-full"
+              />
               <div className="ml-4">
                 <Typography variant="h5" gutterBottom>
                   {name}
@@ -91,7 +98,7 @@ const page = () => {
                     patient.diagnosis.length > 0 &&
                     patient.diagnosis.map((diagnosis, index) => {
                       return (
-                        <div className="flex m-4 ml-0">
+                        <div className="flex m-4 ml-0" key={index}>
                           <div className="w-6">{index + 1}.</div>{" "}
                           <div>{diagnosis}</div>
                         </div>
@@ -107,4 +114,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page

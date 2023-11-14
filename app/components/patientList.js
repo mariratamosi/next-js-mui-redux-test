@@ -58,7 +58,6 @@ const PatientList = () => {
           onChange={(e) => {
             setSearch(e.target.value)
           }}
-          inputProps={{ autoComplete: false }}
         />
       </Box>
       <BasicTable

@@ -9,6 +9,7 @@ import Paper from "@mui/material/Paper"
 import { Button } from "@mui/material"
 import CheckCircleIcon from "@mui/icons-material/CheckCircle"
 import CancelIcon from "@mui/icons-material/Cancel"
+import Image from "next/image"
 
 export default function BasicTable({ patientList, onDetailsClick }) {
   return (
@@ -36,10 +37,12 @@ export default function BasicTable({ patientList, onDetailsClick }) {
             >
               <TableCell component="th" scope="row">
                 <div className="flex items-center">
-                  <img
+                  <Image
                     src={row.profile.image}
                     alt={row.profile.firstName}
-                    className="w-10 rounded-full"
+                    width={40}
+                    height={40}
+                    className=" rounded-full"
                   />
                   <span className="ml-4 text-lg">
                     {row.profile.firstName} {row.profile.lastName}
