@@ -1,11 +1,16 @@
 import AppWrapper from "./appWrapper"
+import { Typography } from "@mui/material"
 
 export default async function Home() {
   //const doctorsInfo = await getData()
 
   return (
     <main className="flex min-h-screen flex-col font-medium">
-      <AppWrapper>Hello world</AppWrapper>
+      <AppWrapper>
+        <Typography variant="h6" color="inherit" component="div">
+          Hello populate
+        </Typography>
+      </AppWrapper>
     </main>
   )
 }
