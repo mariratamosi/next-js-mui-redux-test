@@ -1,15 +1,12 @@
 import AppWrapper from "./appWrapper"
 import { Typography } from "@mui/material"
+import PatientList from "./components/patientList"
 
 export default async function Home() {
-  //const doctorsInfo = await getData()
-
   return (
     <main className="flex min-h-screen flex-col font-medium">
       <AppWrapper>
-        <Typography variant="h6" color="inherit" component="div">
-          Hello populate
-        </Typography>
+        <PatientList />
       </AppWrapper>
     </main>
   )
