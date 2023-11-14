@@ -7,6 +7,8 @@ import TableHead from "@mui/material/TableHead"
 import TableRow from "@mui/material/TableRow"
 import Paper from "@mui/material/Paper"
 import { Button } from "@mui/material"
+import CheckCircleIcon from "@mui/icons-material/CheckCircle"
+import CancelIcon from "@mui/icons-material/Cancel"
 
 export default function BasicTable({ patientList, onDetailsClick }) {
   return (
@@ -15,8 +17,8 @@ export default function BasicTable({ patientList, onDetailsClick }) {
         <TableHead>
           <TableRow>
             <TableCell>Name</TableCell>
-            <TableCell align="right">Phone number</TableCell>
-            <TableCell align="right">New patient</TableCell>
+            <TableCell>Phone number</TableCell>
+            <TableCell align="center">New patient</TableCell>
             <TableCell align="right">Details</TableCell>
           </TableRow>
         </TableHead>
@@ -27,11 +29,17 @@ export default function BasicTable({ patientList, onDetailsClick }) {
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
               <TableCell component="th" scope="row">
-                {row.profile.firstName} {row.profile.lastName}
+                <span>
+                  {row.profile.firstName} {row.profile.lastName}
+                </span>
               </TableCell>
-              <TableCell align="right">{row.profile.phone}</TableCell>
-              <TableCell align="right">
-                {row.profile.newPatient ? "yes" : "no"}
+              <TableCell>{row.profile.phone}</TableCell>
+              <TableCell align="center">
+                {row.profile.newPatient ? (
+                  <CheckCircleIcon color="primary" />
+                ) : (
+                  <CancelIcon color="primary" />
+                )}
               </TableCell>
               <TableCell align="right">
                 <Button

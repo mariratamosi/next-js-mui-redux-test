@@ -3,9 +3,11 @@
 import React, { useEffect, useState } from "react"
 import BasicTable from "./BasicTable"
 import PageLoading from "../Utility/pageLoading"
+import { useRouter } from "next/navigation"
 
 const PatientList = () => {
   const [patientList, setPatientList] = useState(null)
+  const router = useRouter()
 
   useEffect(() => {
     const fetchPatientList = async () => {
@@ -24,6 +26,11 @@ const PatientList = () => {
 
   const onDetailsClick = (patientId) => {
     console.log(patientId)
+    let patient = patientList.filter((patient) => patient.id === patientId)[0]
+    console.log(patient)
+    router.push(
+      `/patientDetails?id=${patientId}&name=${patient.profile.firstName}&img=${patient.profile.image}`,
+    )
   }
 
   return (
