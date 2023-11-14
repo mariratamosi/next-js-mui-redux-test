@@ -4,6 +4,8 @@ import React, { useEffect, useState } from "react"
 import BasicTable from "./BasicTable"
 import PageLoading from "../Utility/pageLoading"
 import { useRouter } from "next/navigation"
+import Box from "@mui/material/Box"
+import Typography from "@mui/material/Typography"
 
 const PatientList = () => {
   const [patientList, setPatientList] = useState(null)
@@ -35,6 +37,18 @@ const PatientList = () => {
 
   return (
     <div className="p-20">
+      <Box
+        sx={{
+          width: "100%",
+          display: "flex",
+          justifyContent: "space-between",
+          marginBottom: 2,
+        }}
+      >
+        <Typography variant="h4" gutterBottom>
+          Your patients
+        </Typography>
+      </Box>
       <BasicTable patientList={patientList} onDetailsClick={onDetailsClick} />
     </div>
   )

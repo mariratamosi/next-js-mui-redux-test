@@ -16,10 +16,16 @@ export default function BasicTable({ patientList, onDetailsClick }) {
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell>Name</TableCell>
-            <TableCell>Phone number</TableCell>
-            <TableCell align="center">New patient</TableCell>
-            <TableCell align="right">Details</TableCell>
+            <TableCell>
+              <span className="text-lg">Patient</span>
+            </TableCell>
+            <TableCell>
+              <span className="text-lg">Phone number</span>
+            </TableCell>
+            <TableCell align="center">
+              <span className="text-lg">New patient</span>
+            </TableCell>
+            <TableCell align="right"></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -29,11 +35,20 @@ export default function BasicTable({ patientList, onDetailsClick }) {
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
               <TableCell component="th" scope="row">
-                <span>
-                  {row.profile.firstName} {row.profile.lastName}
-                </span>
+                <div className="flex items-center">
+                  <img
+                    src={row.profile.image}
+                    alt={row.profile.firstName}
+                    className="w-10 rounded-full"
+                  />
+                  <span className="ml-4 text-lg">
+                    {row.profile.firstName} {row.profile.lastName}
+                  </span>
+                </div>
               </TableCell>
-              <TableCell>{row.profile.phone}</TableCell>
+              <TableCell>
+                <span className="text-lg">{row.profile.phone}</span>
+              </TableCell>
               <TableCell align="center">
                 {row.profile.newPatient ? (
                   <CheckCircleIcon color="primary" />
